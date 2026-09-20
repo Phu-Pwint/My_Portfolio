@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyi Zin Thant | Portfolio</title>
+    <!-- Tailwind CSS & FontAwesome for Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0f172a',
+                        cardBg: '#1e293b',
+                        accent: '#0ea5e9',
+                        accentHover: '#0284c7'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        myanmar: ['Padauk', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        html[lang="my"] body { font-family: 'Padauk', sans-serif; }
+        .tech-border { border: 1px solid rgba(14, 165, 233, 0.2); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .skill-box { border: 1px solid rgba(14, 165, 233, 0.3); }
+        .modal { display: none; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); }
+        .modal.active { display: flex; }
+        #lightbox { transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative">
+
+    <!-- Navbar & Language Switcher -->
+    <nav class="fixed top-0 w-full bg-darkBg/90 backdrop-blur border-b border-gray-800 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="font-bold text-sm sm:text-xl tracking-wider text-accent flex items-center gap-2 shrink-0">
+                <i class="fa-solid fa-microchip"></i>
+                <span>Kyi Zin Thant</span>
+            </a>
+            <div class="flex items-center gap-2 sm:gap-3 text-sm font-semibold text-gray-400">
+                <i class="fa-solid fa-globe"></i>
+                <button onclick="setLang('en')" class="hover:text-white transition lang-btn text-white" data-lang="en">EN</button> |
+                <button onclick="setLang('ja')" class="hover:text-white transition lang-btn" data-lang="ja">JA</button> |
+                <button onclick="setLang('zh')" class="hover:text-white transition lang-btn" data-lang="zh">ZH</button> |
+                <button onclick="setLang('my')" class="hover:text-white transition lang-btn" data-lang="my">MY</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 px-4 text-center">
+        <!-- Logo Image -->
+        <img src="LOGO.png" alt="Kyi Zin Thant Logo" class="w-48 md:w-56 h-auto mx-auto mb-6 object-contain drop-shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 tracking-wide text-white" id="dynamicName">Kyi Zin Thant</h1>
+        
+        <p class="text-lg md:text-xl font-light text-gray-300 max-w-3xl mx-auto mb-2 tracking-wide uppercase" data-i18n="tagline">
+            BUILDING MY IT CAREER — FOCUSED ON SOFTWARE ENGINEERING, TESTING, AND PROBLEM SOLVING
+        </p>
+        <p class="text-accent mb-8 font-mono" data-i18n="jobTitle">Software & Test Engineer</p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#projects" class="bg-accent hover:bg-accentHover text-white px-6 py-2 rounded font-bold transition flex items-center gap-2" data-i18n="btnProjects">VIEW PROJECTS</a>
+            <a id="cv-link" href="ENG CV.pdf" target="_blank" class="border border-gray-600 hover:border-accent text-white px-6 py-2 rounded transition flex items-center gap-2" data-i18n="btnCV">DOWNLOAD CV</a>
+            <a id="wh-link" href="ENG WORK HISTORY.pdf" target="_blank" class="border border-gray-600 hover:border-accent text-white px-6 py-2 rounded transition flex items-center gap-2" data-i18n="btnWH">WORK HISTORY</a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="py-12 px-4 bg-cardBg/40 border-y border-gray-800">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <!-- Profile Image (Uses Personal.jpg) -->
+            <div class="flex-shrink-0 w-32 h-32 md:w-40 md:h-40 rounded-lg overflow-hidden border-2 border-accent p-1">
+                <img src="Personal.jpg" alt="Profile" class="w-full h-full object-cover rounded">
+            </div>
+            
+            <div class="flex-1 text-center md:text-start">
+                <h3 class="text-2xl font-bold mb-4 text-white uppercase tracking-wider" data-i18n="aboutTitle">ABOUT ME</h3>
+                <p class="text-gray-300 leading-relaxed text-sm md:text-base md:text-lg text-justify md:text-start mx-auto" data-i18n="aboutDesc">
+                    I studied Economics in Myanmar before coming to Japan, where I studied Information Processing at a vocational school. After graduating, I started my career in IT and currently work as an engineer through a staffing company, assigned to a Honda R&D project via Veriserve. My current work focuses on automotive navigation image verification, test operations, test tool improvement, and Python-based efficiency tools. With my background in both economics and IT, I am continuing to develop my technical skills and build my career as an IT engineer.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h3 class="text-2xl font-bold mb-8 uppercase tracking-wider text-white" data-i18n="projectsTitle">FEATURED PROJECTS</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Project 1 -->
+                <div class="bg-cardBg rounded-lg p-4 tech-border cursor-pointer hover:-translate-y-1 transition duration-300" onclick="openModal('modal1')">
+                    <div class="h-40 bg-gray-900 rounded mb-4 overflow-hidden relative flex items-center justify-center">
+                        <i class="fa-solid fa-server text-5xl text-accent"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-white" data-i18n="p1Title">Server Administration</h4>
+                    <p class="text-sm text-gray-400 mb-4 h-10 overflow-hidden" data-i18n="p1Desc">Setup and configuration of Linux servers, permissions, and backups.</p>
+                    <div class="flex gap-2 text-xs font-mono text-gray-400 border-t border-gray-700 pt-3">
+                        <span class="border border-gray-600 px-2 py-1 rounded">Linux</span>
+                        <span class="border border-gray-600 px-2 py-1 rounded">Bash</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="bg-cardBg rounded-lg p-4 tech-border cursor-pointer hover:-translate-y-1 transition duration-300" onclick="openModal('modal2')">
+                    <div class="h-40 bg-gray-900 rounded mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i class="fa-brands fa-python text-5xl text-accent"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-white" data-i18n="p2Title">Task Automation</h4>
+                    <p class="text-sm text-gray-400 mb-4 h-10 overflow-hidden" data-i18n="p2Desc">Python scripting to accelerate routine tasks and data processing.</p>
+                    <div class="flex gap-2 text-xs font-mono text-gray-400 border-t border-gray-700 pt-3">
+                        <span class="border border-gray-600 px-2 py-1 rounded">Python</span>
+                        <span class="border border-gray-600 px-2 py-1 rounded">API</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="bg-cardBg rounded-lg p-4 tech-border cursor-pointer hover:-translate-y-1 transition duration-300" onclick="openModal('modal3')">
+                    <div class="h-40 bg-gray-900 rounded mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i class="fa-solid fa-car-side text-5xl text-accent"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-white" data-i18n="p3Title">Automotive R&D Testing</h4>
+                    <p class="text-sm text-gray-400 mb-4 h-10 overflow-hidden" data-i18n="p3Desc">Navigation image verification and test operations.</p>
+                    <div class="flex gap-2 text-xs font-mono text-gray-400 border-t border-gray-700 pt-3">
+                        <span class="border border-gray-600 px-2 py-1 rounded">Testing</span>
+                        <span class="border border-gray-600 px-2 py-1 rounded">QA</span>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="bg-cardBg rounded-lg p-4 tech-border cursor-pointer hover:-translate-y-1 transition duration-300" onclick="openModal('modal4')">
+                    <div class="h-40 bg-gray-900 rounded mb-4 flex items-center justify-center overflow-hidden relative">
+                        <i class="fa-solid fa-database text-5xl text-accent"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2 text-white" data-i18n="p4Title">Database Development</h4>
+                    <p class="text-sm text-gray-400 mb-4 h-10 overflow-hidden" data-i18n="p4Desc">Designing efficient data structures and securing data access.</p>
+                    <div class="flex gap-2 text-xs font-mono text-gray-400 border-t border-gray-700 pt-3">
+                        <span class="border border-gray-600 px-2 py-1 rounded">SQL</span>
+                        <span class="border border-gray-600 px-2 py-1 rounded">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Languages -->
+    <section class="py-12 px-4 bg-cardBg/30 border-y border-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-2xl font-bold mb-8 uppercase tracking-wider text-white" data-i18n="skillsTitle">SKILLS & LANGUAGES</h3>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <!-- Skills Box Icons -->
+                <div class="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="flex flex-col items-center justify-center bg-cardBg p-6 rounded-lg skill-box text-center transition hover:bg-gray-800">
+                        <i class="fa-solid fa-code text-3xl text-accent mb-2"></i>
+                        <span class="text-sm text-gray-300 font-bold">Programming</span>
+                        <span class="text-xs text-gray-500 mt-1">Python / C</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center bg-cardBg p-6 rounded-lg skill-box text-center transition hover:bg-gray-800">
+                        <i class="fa-solid fa-bug-slash text-3xl text-accent mb-2"></i>
+                        <span class="text-sm text-gray-300 font-bold">QA & Testing</span>
+                        <span class="text-xs text-gray-500 mt-1">Verification</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center bg-cardBg p-6 rounded-lg skill-box text-center transition hover:bg-gray-800">
+                        <i class="fa-solid fa-network-wired text-3xl text-accent mb-2"></i>
+                        <span class="text-sm text-gray-300 font-bold">Networking</span>
+                        <span class="text-xs text-gray-500 mt-1">Protocols & Config</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center bg-cardBg p-6 rounded-lg skill-box text-center transition hover:bg-gray-800">
+                        <i class="fa-brands fa-linux text-3xl text-accent mb-2"></i>
+                        <span class="text-sm text-gray-300 font-bold">Linux</span>
+                        <span class="text-xs text-gray-500 mt-1">Administration</span>
+                    </div>
+                </div>
+
+                <!-- Language Bars -->
+                <div class="flex-1 bg-cardBg p-6 rounded-lg border border-gray-800 flex flex-col justify-center">
+                    <ul class="space-y-4 text-sm font-bold text-gray-300">
+                        <li class="flex items-center gap-4">
+                            <span class="w-32" data-i18n="langEn">ENGLISH</span>
+                            <div class="flex-1 flex gap-1 h-2">
+                                <div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-gray-700 w-1/5 rounded-sm"></div>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <span class="w-32" data-i18n="langJa">JAPANESE</span>
+                            <div class="flex-1 flex gap-1 h-2">
+                                <div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-gray-700 w-1/5 rounded-sm"></div>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <span class="w-32" data-i18n="langZh">CHINESE</span>
+                            <div class="flex-1 flex gap-1 h-2">
+                                <div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-gray-700 w-1/5 rounded-sm"></div><div class="bg-gray-700 w-1/5 rounded-sm"></div><div class="bg-gray-700 w-1/5 rounded-sm"></div>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <span class="w-32" data-i18n="langMy">BURMESE</span>
+                            <div class="flex-1 flex gap-1 h-2">
+                                <div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div><div class="bg-accent w-1/5 rounded-sm"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact Form -->
+    <footer class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-cardBg/50 p-8 rounded-lg border border-gray-800">
+            <!-- Formspree Vanilla JS (Ajax) Form -->
+            <div class="w-full">
+                <!-- رسائل النجاح والخطأ -->
+                <div data-fs-success class="text-green-400 text-sm mb-4 font-bold text-center"></div>
+                <div data-fs-error class="text-red-400 text-sm mb-4 font-bold text-center"></div>
+                
+                <form id="contact-form" class="flex flex-col gap-3 w-full">
+                    <input type="text" name="name" placeholder="Name" required data-i18n-placeholder="formName" data-fs-field class="bg-transparent border border-gray-700 p-2 text-sm text-white focus:outline-none focus:border-accent rounded">
+                    <input type="email" name="email" placeholder="Email" required data-i18n-placeholder="formEmail" data-fs-field class="bg-transparent border border-gray-700 p-2 text-sm text-white focus:outline-none focus:border-accent rounded">
+                    <textarea name="message" placeholder="Message" rows="3" required data-i18n-placeholder="formMessage" data-fs-field class="bg-transparent border border-gray-700 p-2 text-sm text-white focus:outline-none focus:border-accent rounded resize-none"></textarea>
+                    
+                    <button type="submit" data-fs-submit-btn class="border border-gray-600 hover:border-accent hover:text-white text-gray-300 text-xs py-2 px-4 rounded w-max transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span data-i18n="btnContactSubmit">Submit</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Email & Socials -->
+            <div class="text-center flex flex-col items-center gap-4 border-t md:border-t-0 md:border-s border-gray-700 pt-6 md:pt-0">
+                <a href="mailto:aquariusmizu55@gmail.com" class="text-gray-300 hover:text-white transition font-mono text-sm md:text-base">aquariusmizu55@gmail.com</a>
+                <div class="flex gap-6 text-3xl text-gray-400 mt-2">
+                    <a href="https://github.com/Phu-Pwint" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals (Popups) -->
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal fixed inset-0 z-50 items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div class="bg-cardBg w-full max-w-2xl rounded-lg border border-gray-700 relative p-6">
+            <button onclick="closeModal('modal1')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-white" data-i18n="p1Title">Server Administration</h2>
+            <p class="text-gray-300 mb-6 text-sm leading-relaxed" data-i18n="p1DescLong">Set up a complete server environment using Linux. Wrote Bash scripts to automate backup processes, monitor server performance, and manage user permissions securely.</p>
+        </div>
+    </div>
+    
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal fixed inset-0 z-50 items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div class="bg-cardBg w-full max-w-2xl rounded-lg border border-gray-700 relative p-6">
+            <button onclick="closeModal('modal2')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-white" data-i18n="p2Title">Task Automation</h2>
+            <p class="text-gray-300 mb-6 text-sm leading-relaxed" data-i18n="p2DescLong">Utilized Python to interact with various APIs, extracting and processing data automatically, significantly reducing manual data entry time.</p>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal fixed inset-0 z-50 items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div class="bg-cardBg w-full max-w-2xl rounded-lg border border-gray-700 relative p-6">
+            <button onclick="closeModal('modal3')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-white" data-i18n="p3Title">Automotive R&D Testing</h2>
+            <p class="text-gray-300 mb-6 text-sm leading-relaxed" data-i18n="p3DescLong">Assigned to a Honda R&D project via 株式会社ベリサーブ. Focused on automotive navigation image verification, executing test operations, and continuously improving test tools using Python scripts.</p>
+        </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div id="modal4" class="modal fixed inset-0 z-50 items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div class="bg-cardBg w-full max-w-2xl rounded-lg border border-gray-700 relative p-6">
+            <button onclick="closeModal('modal4')" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-white" data-i18n="p4Title">Database Development</h2>
+            <p class="text-gray-300 mb-6 text-sm leading-relaxed" data-i18n="p4DescLong">Designed and built relational (SQL) and non-relational (NoSQL) databases for web applications. Focused on optimizing queries and logical table structuring.</p>
+        </div>
+    </div>
+
+    <!-- i18n Script -->
+    <script>
+        const translations = {
+            en: {
+                name: "Kyi Zin Thant",
+                tagline: "BUILDING MY IT CAREER — FOCUSED ON SOFTWARE ENGINEERING, TESTING, AND PROBLEM SOLVING",
+                jobTitle: "Software & Test Engineer",
+                btnProjects: "VIEW PROJECTS",
+                btnCV: "DOWNLOAD CV",
+                btnWH: "WORK HISTORY",
+                aboutTitle: "ABOUT ME",
+                aboutDesc: "I studied Economics in Myanmar before coming to Japan, where I studied Information Processing at a vocational school. After graduating, I started my career in IT and currently work as an engineer through a staffing company, assigned to a Honda R&D project via Veriserve. My current work focuses on automotive navigation image verification, test operations, test tool improvement, and Python-based efficiency tools. With my background in both economics and IT, I am continuing to develop my technical skills and build my career as an IT engineer.",
+                projectsTitle: "FEATURED PROJECTS",
+                p1Title: "Server Administration",
+                p1Desc: "Setup and configuration of Linux servers, permissions, and backups.",
+                p1DescLong: "Set up a complete server environment using Linux. Wrote Bash scripts to automate backup processes, monitor server performance, and manage user permissions securely.",
+                p2Title: "Task Automation",
+                p2Desc: "Python scripting to accelerate routine tasks and data processing.",
+                p2DescLong: "Utilized Python to interact with various APIs, extracting and processing data automatically, significantly reducing manual data entry time.",
+                p3Title: "Automotive R&D Testing",
+                p3Desc: "Navigation image verification and test operations.",
+                p3DescLong: "Assigned to a Honda R&D project via Veriserve. Focused on automotive navigation image verification, executing test operations, and continuously improving test tools using Python scripts.",
+                p4Title: "Database Development",
+                p4Desc: "Designing efficient data structures and securing data access.",
+                p4DescLong: "Designed and built relational (SQL) and non-relational (NoSQL) databases for web applications. Focused on optimizing queries and logical table structuring.",
+                skillsTitle: "SKILLS & LANGUAGES",
+                langEn: "ENGLISH",
+                langJa: "JAPANESE",
+                langZh: "CHINESE",
+                langMy: "BURMESE",
+                btnContactSubmit: "Submit",
+                formName: "Name",
+                formEmail: "Email",
+                formMessage: "Message"
+            },
+            ja: {
+                name: "Kyi Zin Thant",
+                tagline: "ITキャリアの構築 — ソフトウェアエンジニアリング、テスト、そして問題解決への探求",
+                jobTitle: "Software & Test Engineer",
+                btnProjects: "プロジェクトを見る",
+                btnCV: "履歴書ダウンロード",
+                btnWH: "職務経歴書ダウンロード",
+                aboutTitle: "自己紹介",
+                aboutDesc: "ミャンマーで経済学を学んだ後、来日して専門学校で情報処理を専攻しました。卒業後はIT業界でキャリアをスタートさせ、現在は派遣エンジニアとして、株式会社ベリサーブを通じてHonda R&Dのプロジェクトに参画しています。現在の業務は、カーナビゲーションの画像検証、テスト運用、テストツールの改善、およびPythonを用いた業務効率化ツールの開発です。経済学とITの双方のバックグラウンドを活かし、ITエンジニアとしての技術力向上とキャリア構築に継続して取り組んでいます。",
+                projectsTitle: "注目のプロジェクト",
+                p1Title: "サーバー管理システム",
+                p1Desc: "Linuxサーバーの構築、権限管理、バックアップの自動化。",
+                p1DescLong: "Linuxを使用したサーバー環境の構築。Bashスクリプトを作成し、バックアッププロセスやサーバーの監視、ユーザー権限の管理を自動化しました。",
+                p2Title: "タスク自動化 (Automation)",
+                p2Desc: "ルーチンタスクやデータ処理を効率化するPythonスクリプト。",
+                p2DescLong: "Pythonを使用して様々なAPIと連携し、データの抽出と処理を自動化。手作業によるデータ入力の時間を大幅に削減しました。",
+                p3Title: "自動車R&Dテスト業務",
+                p3Desc: "カーナビゲーションの画像検証およびテスト運用。",
+                p3DescLong: "株式会社ベリサーブを通じてHonda R&Dプロジェクトに参画。カーナビの画像検証、テスト運用、およびPythonを用いたテストツールの改善に注力しています。",
+                p4Title: "データベース開発",
+                p4Desc: "効率的なデータ構造の設計とアクセスセキュリティの確保。",
+                p4DescLong: "Webアプリケーション向けのリレーショナル（SQL）および非リレーショナル（NoSQL）データベースの設計・構築。クエリの最適化に注力しました。",
+                skillsTitle: "スキルとツール",
+                langEn: "英語",
+                langJa: "日本語",
+                langZh: "中国語",
+                langMy: "ビルマ語",
+                btnContactSubmit: "送信",
+                formName: "名前",
+                formEmail: "メール",
+                formMessage: "メッセージ"
+            },
+            zh: {
+                name: "Kyi Zin Thant",
+                tagline: "建立我的IT职业生涯 —— 专注于软件工程、测试与解决问题的能力",
+                jobTitle: "Software & Test Engineer",
+                btnProjects: "查看项目",
+                btnCV: "下载简历",
+                btnWH: "下载工作经历",
+                aboutTitle: "关于我",
+                aboutDesc: "在来日本之前，我在缅甸学习了经济学，之后在日本的专门学校学习了信息处理。毕业后，我开始了我的IT职业生涯，目前通过派遣公司作为工程师，经由Veriserve参与Honda R&D的项目。我目前的工作主要集中在汽车导航图像验证、测试运营、测试工具改进以及基于Python的效率工具开发上。凭借经济学和IT的双重背景，我正在不断提升我的技术技能，努力打造作为IT工程师的职业生涯。",
+                projectsTitle: "精选项目",
+                p1Title: "服务器管理",
+                p1Desc: "配置Linux服务器、权限管理和备份自动化。",
+                p1DescLong: "使用Linux建立完整的服务器环境。编写Bash脚本以自动化备份过程，监控服务器性能，并安全地管理用户权限。",
+                p2Title: "任务自动化",
+                p2Desc: "编写Python脚本以加速日常任务和数据处理。",
+                p2DescLong: "利用Python与各种API交互，自动提取和处理数据，大大减少了手动输入数据的时间。",
+                p3Title: "汽车研发测试",
+                p3Desc: "汽车导航图像验证及测试运营。",
+                p3DescLong: "经由Veriserve参与Honda R&D项目。专注于汽车导航图像验证、执行测试操作，并使用Python脚本不断改进测试工具。",
+                p4Title: "数据库开发",
+                p4Desc: "设计高效的数据结构并确保数据访问安全。",
+                p4DescLong: "为Web应用程序设计和构建关系型（SQL）和非关系型（NoSQL）数据库。专注于优化查询和合理的表结构。",
+                skillsTitle: "技能与语言",
+                langEn: "英语",
+                langJa: "日语",
+                langZh: "中文",
+                langMy: "缅甸语",
+                btnContactSubmit: "提交",
+                formName: "姓名",
+                formEmail: "邮箱",
+                formMessage: "信息"
+            },
+            my: {
+                name: "Kyi Zin Thant",
+                tagline: "ကျွန်ုပ်၏ IT ကယ်ရီယာကို တည်ဆောက်ခြင်း — ဆော့ဖ်ဝဲအင်ဂျင်နီယာ၊ စမ်းသပ်ခြင်းနှင့် ပြဿနာဖြေရှင်းခြင်းတို့ကို အဓိကထားခြင်း",
+                jobTitle: "Software & Test Engineer",
+                btnProjects: "ပရောဂျက်များကြည့်ရန်",
+                btnCV: "CV ဒေါင်းလုဒ်လုပ်ရန်",
+                btnWH: "အလုပ်မှတ်တမ်း",
+                aboutTitle: "ကျွန်ုပ်အကြောင်း",
+                aboutDesc: "ဂျပန်သို့မလာမီ မြန်မာနိုင်ငံတွင် စီးပွားရေးပညာကို လေ့လာခဲ့ပြီး ဂျပန်နိုင်ငံရှိ သက်မွေးဝမ်းကျောင်းကျောင်းတွင် Information Processing ကို လေ့လာခဲ့ပါသည်။ ဘွဲ့ရပြီးနောက် IT နယ်ပယ်တွင် အလုပ်စတင်ခဲ့ပြီး လက်ရှိတွင် အေဂျင်စီမှတစ်ဆင့် Veriserve မှတဆင့် Honda R&D ပရောဂျက်တစ်ခုတွင် အင်ဂျင်နီယာတစ်ဦးအနေဖြင့် လုပ်ကိုင်နေပါသည်။ ကျွန်ုပ်၏ လက်ရှိအလုပ်သည် ကားရေဒီယို (navigation) ရုပ်ပုံစစ်ဆေးခြင်း၊ စမ်းသပ်ခြင်းလုပ်ငန်းစဉ်များ၊ စမ်းသပ်ကိရိယာများ တိုးတက်ကောင်းမွန်စေခြင်းနှင့် Python ကိုအသုံးပြုထားသော လုပ်ငန်းခွင်သုံးကိရိယာများအပေါ် အဓိကထားပါသည်။ စီးပွားရေးနှင့် IT နောက်ခံနှစ်ခုစလုံးဖြင့် IT အင်ဂျင်နီယာတစ်ဦးအနေဖြင့် ကျွန်ုပ်၏ နည်းပညာကျွမ်းကျင်မှုများကို ဆက်လက်ဖွံ့ဖြိုးတိုးတက်စေရန်နှင့် ကယ်ရီယာကို တည်ဆောက်ရန် ကြိုးပမ်းနေပါသည်။",
+                projectsTitle: "အထူးပြုပရောဂျက်များ",
+                p1Title: "ဆာဗာစီမံခန့်ခွဲမှု",
+                p1Desc: "Linux ဆာဗာများ သတ်မှတ်ခြင်း၊ ခွင့်ပြုချက်များနှင့် အရန်သိမ်းဆည်းခြင်းများ။",
+                p1DescLong: "Linux ကို အသုံးပြု၍ ပြီးပြည့်စုံသော ဆာဗာပတ်ဝန်းကျင်ကို တည်ဆောက်ခဲ့သည်။ အရန်သိမ်းခြင်း လုပ်ငန်းစဉ်များကို အလိုအလျောက်လုပ်ဆောင်ရန်၊ ဆာဗာစွမ်းဆောင်ရည်ကို စောင့်ကြည့်ရန်နှင့် အသုံးပြုသူခွင့်ပြုချက်များကို လုံခြုံစွာ စီမံခန့်ခွဲရန် Bash script များကို ရေးသားခဲ့သည်။",
+                p2Title: "အလုပ်အလိုအလျောက်လုပ်ဆောင်ခြင်း",
+                p2Desc: "ပုံမှန်အလုပ်များနှင့် ဒေတာလုပ်ဆောင်ခြင်းကို အရှိန်မြှင့်ရန် Python script ရေးသားခြင်း။",
+                p2DescLong: "ဒေတာများကို အလိုအလျောက် ထုတ်ယူရန်နှင့် လုပ်ဆောင်ရန် API အမျိုးမျိုးနှင့် ချိတ်ဆက်ရန် Python ကို အသုံးပြုခဲ့ပြီး လူကိုယ်တိုင် ဒေတာထည့်သွင်းချိန်ကို သိသိသာသာ လျှော့ချပေးခဲ့သည်။",
+                p3Title: "မော်တော်ယာဉ် R&D စမ်းသပ်ခြင်း",
+                p3Desc: "Navigation ရုပ်ပုံစစ်ဆေးခြင်းနှင့် စမ်းသပ်ခြင်းလုပ်ငန်းစဉ်များ။",
+                p3DescLong: "Veriserve မှတစ်ဆင့် Honda R&D ပရောဂျက်တွင် တာဝန်ပေးအပ်ခြင်းခံရသည်။ Navigation ရုပ်ပုံများ စစ်ဆေးခြင်း၊ စမ်းသပ်ခြင်းများလုပ်ဆောင်ခြင်းနှင့် Python script များသုံး၍ စမ်းသပ်ကိရိယာများကို အဆက်မပြတ် တိုးတက်စေခြင်းတို့ကို အဓိကလုပ်ဆောင်သည်။",
+                p4Title: "ဒေတာဘေ့စ် ဖွံ့ဖြိုးတိုးတက်မှု",
+                p4Desc: "ထိရောက်သော ဒေတာဖွဲ့စည်းပုံများကို ဒီဇိုင်းဆွဲခြင်းနှင့် ဒေတာဝင်ရောက်မှုကို လုံခြုံစေခြင်း။",
+                p4DescLong: "Web application များအတွက် relational (SQL) နှင့် non-relational (NoSQL) ဒေတာဘေ့စ်များကို ဒီဇိုင်းဆွဲတည်ဆောက်ခဲ့သည်။ Query များကို အကောင်းဆုံးဖြစ်အောင်နှင့် ယုတ္တိရှိသော ဇယားဖွဲ့စည်းပုံကို အာရုံစိုက်ခဲ့သည်။",
+                skillsTitle: "ကျွမ်းကျင်မှုနှင့် ဘာသာစကားများ",
+                langEn: "အင်္ဂလိပ်",
+                langJa: "ဂျပန်",
+                langZh: "တရုတ်",
+                langMy: "မြန်မာ",
+                btnContactSubmit: "ပေးပို့ရန်",
+                formName: "အမည်",
+                formEmail: "အီးမေးလ်",
+                formMessage: "မက်ဆေ့ချ်"
+            }
+        };
+
+        const cvFiles = {
+            en: 'ENG CV.pdf',
+            ja: 'JP CV.pdf',
+            zh: 'ENG CV.pdf', 
+            my: 'ENG CV.pdf'
+        };
+
+        const whFiles = {
+            en: 'ENG WORK HISTORY.pdf',
+            ja: 'JP Work History.pdf',
+            zh: 'ENG WORK HISTORY.pdf',
+            my: 'ENG WORK HISTORY.pdf'
+        };
+
+        function setLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                    el.setAttribute('dir', 'ltr'); 
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                    el.setAttribute('dir', 'ltr');
+                }
+            });
+            
+            const dynName = document.getElementById('dynamicName');
+            dynName.innerText = translations[lang].name;
+            dynName.setAttribute('dir', 'ltr');
+            
+            document.documentElement.setAttribute('lang', lang);
+            
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('text-white');
+                btn.classList.add('text-gray-400');
+            });
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('text-white');
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.remove('text-gray-400');
+
+            const cvLink = document.getElementById('cv-link');
+            if (cvLink && cvFiles[lang]) {
+                cvLink.href = cvFiles[lang];
+                cvLink.setAttribute('download', cvFiles[lang]);
+            }
+            
+            const whLink = document.getElementById('wh-link');
+            if (whLink && whFiles[lang]) {
+                whLink.href = whFiles[lang];
+                whLink.setAttribute('download', whFiles[lang]);
+            }
+        }
+
+        function openModal(id) {
+            const m = document.getElementById(id);
+            if (!m) return;
+            m.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            const m = document.getElementById(id);
+            if (!m) return;
+            m.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        };
+        
+        document.addEventListener('keydown', e => { 
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => closeModal(m.id));
+            }
+        });
+
+        window.onload = () => setLang('en');
+    </script>
+    
+    <!-- Formspree Script -->
+    <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#contact-form', formId: 'xeaoegdg' });
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+</body>
+</html>
